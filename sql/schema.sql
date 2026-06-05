@@ -38,7 +38,7 @@ CREATE TABLE pitstops (
 );
 CREATE TABLE weather (
   weather_id INT AUTO_INCREMENT PRIMARY KEY,
-  session_id INT,
+  Session_id INT,
   time_elapsed FLOAT,
   air_temp FLOAT,
   track_temp FLOAT,

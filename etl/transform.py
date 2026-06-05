@@ -32,9 +32,20 @@ def transform_drivers(session):
     """Extracts unique driver and team info from the session"""
     laps=session.laps.copy()
     drivers=laps[['Driver','Team']].drop_duplicates()
-    drivers.colums=['code','team']
+    drivers.columns=['code','team']
+    drivers = drivers.reset_index(drop=True)
+    driver_names = []
+    for code in drivers['code']:
+        try:
+            name = session.get_driver(code)['FullName']
+        except:
+            name = code
+        driver_names.append(name)
+    
+    drivers['driver_name'] = driver_names
     print(f"Found {len(drivers)} drivers")
     return drivers
+
 
 
 
