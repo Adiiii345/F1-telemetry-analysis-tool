@@ -48,7 +48,7 @@ Deployment: Streamlit Cloud
 
 
 PROJECT/FOLDER STRUCTURE
-'''
+```
 F1-Telemetry-Analysis-Tool/
 │
 ├── etl/
@@ -84,7 +84,7 @@ F1-Telemetry-Analysis-Tool/
 ├── app.py
 ├── requirements.txt
 └── README.md
-'''
+```
 
 DATABASE SCHEMA
 
