@@ -41,6 +41,7 @@ def get_race_results(session_id):
         JOIN Drivers d ON l.Driver_id=d.Driver_id
         WHERE l.Session_id= :session_id
         AND l.is_pit_out=0
+        AND l.Lap_time_sec < 200
         GROUP BY d.Driver_Code, d.Driver_name, d.Team
         ORDER BY fastest_lap ASC
     """)
@@ -87,6 +88,7 @@ def get_race_pace(session_id):
         WHERE l.Session_id= :session_id
         AND l.is_pit_out=0
         AND l.Lap_time_sec IS NOT NULL
+        AND l.Lap_time_sec < 200
         AND l.Lap_time_sec < (
             SELECT AVG(Lap_time_sec)+ 2 * STDDEV(Lap_time_sec)
             FROM Laps
