@@ -19,7 +19,7 @@ def transform_laps(session):
     print(f"Transformed {len(laps)} clean laps")
     return laps
 
-def _transform_weather(session):
+def transform_weather(session):
     """Cleans Weather Data of the session"""
     weather=session.weather_data.copy()
     weather = weather[['Time', 'AirTemp', 'TrackTemp','Rainfall', 'WindSpeed']]
