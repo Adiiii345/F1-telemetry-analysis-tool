@@ -66,6 +66,16 @@ def load_drivers(drivers_df):
 
 def load_laps(laps_df, session_id, driver_map):
     laps_df=laps_df.copy()
+    with engine.connect() as conn:
+        existing=conn.execute(text("""
+            SELECT COUNT(*) 
+            FROM Laps 
+            WHERE Session_id = :session_id
+        """),{'session_id':session_id}).scalar()
+
+        if existing > 0:
+            print(f"Laps already exist for session {session_id}, skipping insert")
+            return
 
     laps_df['Session_id']= session_id
     laps_df['Driver_id']=laps_df['Driver'].map(driver_map)
@@ -88,6 +98,16 @@ def load_laps(laps_df, session_id, driver_map):
 
 def load_weather(weather_df, session_id):
     weather_df=weather_df.copy()
+    with engine.connect() as conn:
+        existing = conn.execute(text("""
+            SELECT COUNT(*)
+            FROM weather 
+            WHERE Session_id = :session_id
+        """),{'session_id': session_id}).scalar()
+
+        if existing > 0:
+            print(f"Weather already exists for session {session_id}, skipping insert")
+            return
     weather_df['Session_id']=session_id
     weather_df = weather_df.rename(columns={
         'AirTemp':     'air_temp',

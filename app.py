@@ -101,12 +101,84 @@ Use the Sidebar to
 - **Switch between races** — select any previously loaded race instantly
 - **Navigate pages** — use the pages in the sidebar to explore different analysis
 """)
+st.markdown("""
+    <style>
+        .feature-card {
+            position: relative;
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            border: 0.5px solid #333;
+            background-color: #111;
+            background-image: 
+                repeating-linear-gradient(
+                    45deg,
+                    rgba(225, 6, 0, 0.06) 0px,
+                    rgba(225, 6, 0, 0.06) 2px,
+                    transparent 2px,
+                    transparent 14px
+                );
+        }
+        .feature-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e10600, #ff6b00);
+        }
+        .feature-card .icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .feature-card .title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        .feature-card .desc {
+            color: #999;
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+        .feature-card:hover {
+            border-color: #e10600;
+            transition: border-color 0.3s ease;
+        }
+    </style>
+""",unsafe_allow_html=True)
 
 col1,col2,col3=st.columns(3)
 
 with col1:
-    st.info(f"**Race Overview**\nFastest laps and race pace for all drivers")
+    st.markdown("""
+        <div class="feature-card">
+            <div class="title">Race Overview</div>
+            <div class="desc">Podium, fastest laps and race pace for all drivers</div>
+        </div>
+    """, unsafe_allow_html=True)
 with col2:
-     st.info(f"**Driver Comparison**\nHead to head lap time and sector analysis")
+     st.markdown("""
+        <div class="feature-card">
+        <div class="title">Driver Comparison</div>
+        <div class="desc">Head to head lap time and sector analysis</div>
+        </div>
+    """, unsafe_allow_html=True)
 with col3:
-    st.info(f"**Tyre Strategy**\nStint chart and tyre degradation analysis")
+    st.markdown("""
+        <div class="feature-card">
+            <div class="icon"></div>
+            <div class="title">Tyre Strategy</div>
+            <div class="desc">Stint chart and tyre degradation analysis</div>
+        </div>
+    """, unsafe_allow_html=True)
