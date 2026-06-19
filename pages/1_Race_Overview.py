@@ -7,7 +7,19 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__),'..', 'analysis'))
 sys.path.append(os.path.join(os.path.dirname(__file__),'..', 'etl'))
 
+from extract import extract_session
 from lap_analysis import get_race_results, get_race_pace
+
+@st.cache_data
+def get_finishing_positions(year, race_name, session_type):
+    """
+    Fetches official finishing positions from FastF1
+    """
+    session = extract_session(year, race_name, session_type)
+    pos_df = session.results[['Abbreviation', 'Position']].copy()
+    pos_df.columns = ['Driver_Code', 'Position']
+    pos_df['Position'] = pos_df['Position'].astype(int)
+    return pos_df
 
 st.set_page_config(layout='wide')
 
@@ -39,6 +51,17 @@ print(results)
 if results.empty:
     st.warning("No race selected. Please go and select a race.")
     st.stop()
+try:
+    positions = get_finishing_positions(
+        st.session_state['year'],
+        st.session_state['race_name'],
+        st.session_state['session_type']
+    )
+    results = results.merge(positions, on='Driver_Code', how='left')
+    results = results.sort_values('Position')
+except Exception as e:
+    st.warning(f"Could not fetch official positions, showing results by fastest lap instead.")
+    results['Position'] = range(1, len(results) + 1)
 
 st.markdown("Key Stats of the Race")
 col1,col2,col3,col4 =st.columns(4)
@@ -60,7 +83,26 @@ with col4:
     st.metric("Total laps", total_laps)
 
 st.markdown("---")
+st.markdown("### Podium")
+st.markdown("---")
 
+podium = results.sort_values('Position').head(3)
+
+p1, p2, p3 = st.columns(3)
+medal_colors = ['#FFD700', '#C0C0C0', '#CD7F32']
+medal_labels = ['P1', 'P2', 'P3']
+
+for col, (_, row), color, label in zip([p1, p2, p3], podium.iterrows(), medal_colors, medal_labels):
+    with col:
+        st.markdown(f"""
+            <div style="background:#111; border:2px solid {color}; border-radius:10px; padding:24px; text-align:center;">
+                <p style="color:{color}; font-size:14px; font-weight:600; margin:0;">{label}</p>
+                <p style="color:white; font-size:26px; font-weight:700; margin:10px 0 4px;">{row['Driver_Code']}</p>
+                <p style="color:#888; font-size:13px; margin:0;">{row['Team']}</p>
+                <p style="color:#666; font-size:12px; margin-top:10px;">Fastest: {round(row['fastest_lap'], 3)}s</p>
+            </div>
+        """, unsafe_allow_html=True)
+st.markdown("---")
 display_results= results[['Driver_Code', 'Driver_name', 'Team','fastest_lap', 'total_laps', 'avg_lap_time']].copy()
 display_results.columns= ['Code', 'Driver', 'Team', 'Fastest Lap(s)','Total Laps', 'Average Pace(s)']
 

@@ -115,11 +115,11 @@ Weather Impact: Relation between track temperatures and lap times.
 
 KEY INSIGHTS:
 
-Verstappen's average race pace in Bahrain 2023 was consistently 0.3 to 0.5 seconds faster per lap than his nearest competitor.
+The Dashboard displays four crucial insights used by the stakeholders that is the Formula 1 Teams. These insights are illustrated efficiently in the dashboard by dividing it into four parts
 
-Tyre degradation on the Medium compound was significantly higher in the final stint due to rising track temperatures.
+1) The first part is the race overview part where general information such as number of laps, number of drivers, fastest laps and average pace is displayed along with a table showcasing the finishing position of each driver with key insights such as fastest lap and average pace.
 
-Sector 2 showed the biggest variation between drivers and was a key differentiator in qualifying pace.
+2) The second page is the Driver Comparison page where one can compare any two drivers of a race and gain insights about their lap to lap comparison as well as sector to sector comparison. It shows the Laptime comparison of the two drivers throughout the race, their Lap time delta to determine the faster driver and Their average sector times.
 
 
 REQUIREMENTS:

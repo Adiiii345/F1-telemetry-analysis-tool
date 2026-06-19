@@ -62,6 +62,9 @@ if st.sidebar.button("Load Race", use_container_width=True,type='primary'):
             st.sidebar.success(f"{year} {race} loaded successfully!")
             st.session_state['session_id'] = session_id
             st.session_state['session_name'] = f"{year} {race}"
+            st.session_state['year'] = year
+            st.session_state['race_name'] = race
+            st.session_state['session_type'] = session_type
 
         except Exception as e:
             st.sidebar.error(f"❌ Error: {e}")
@@ -83,6 +86,9 @@ if len(sessions)>0:
         sessions.iloc[selected_idx]['Session_id']
     )
     st.session_state['session_name']=selected
+    st.session_state['year'] = int(sessions.iloc[selected_idx]['Year'])
+    st.session_state['race_name'] = sessions.iloc[selected_idx]['Race_name']
+    st.session_state['session_type'] = sessions.iloc[selected_idx]['Session_type']
 else:
     st.sidebar.info("No race loaded yet, Load a race to analyse it.")
 
