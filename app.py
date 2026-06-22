@@ -112,7 +112,7 @@ st.markdown("""
         .feature-card {
             position: relative;
             border-radius: 12px;
-            padding: 28px 20px;
+            padding: 28px 20px 8px;
             text-align: center;
             height: 220px;
             display: flex;
@@ -130,6 +130,10 @@ st.markdown("""
                     transparent 14px
                 );
         }
+        .feature-card:hover {
+                border-color: #e10600;
+                transition: border-color 0.3s ease;
+        }
         .feature-card::before {
             content: "";
             position: absolute;
@@ -138,29 +142,36 @@ st.markdown("""
             background: linear-gradient(90deg, #e10600, #ff6b00);
         }
         .feature-card .icon {
-            font-size: 40px;
-            margin-bottom: 12px;
-            position: relative;
-            z-index: 1;
+            font-size: 36px;
+            margin-bottom: 10px;
         }
         .feature-card .title {
             color: white;
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 8px;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 6px;
         }
         .feature-card .desc {
             color: #999;
-            font-size: 14px;
+            font-size: 13px;
+        }
+        div[data-testid="stPageLink"] {
+            margin-top: -45px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
-        .feature-card:hover {
-            border-color: #e10600;
-            transition: border-color 0.3s ease;
+        div[data-testid="stPageLink"] a {
+            background: transparent !important;
+            border: none !important;
+            color: #e10600 !important;
+            font-weight: 600 !important;
+            justify-content: center !important;
         }
+        div[data-testid="stPageLink"] a:hover {
+            color: #ff6b00 !important;
+            text-decoration: underline !important;
+        }
+    
     </style>
 """,unsafe_allow_html=True)
 
@@ -173,13 +184,15 @@ with col1:
             <div class="desc">Podium, fastest laps and race pace for all drivers</div>
         </div>
     """, unsafe_allow_html=True)
+    st.page_link("pages/1_Race_Overview.py", label="Open →", use_container_width=True)
 with col2:
-     st.markdown("""
+    st.markdown("""
         <div class="feature-card">
         <div class="title">Driver Comparison</div>
         <div class="desc">Head to head lap time and sector analysis</div>
         </div>
     """, unsafe_allow_html=True)
+    st.page_link("pages/2_Driver_Comparison.py", label="Open →", use_container_width=True)
 with col3:
     st.markdown("""
         <div class="feature-card">
@@ -188,3 +201,4 @@ with col3:
             <div class="desc">Stint chart and tyre degradation analysis</div>
         </div>
     """, unsafe_allow_html=True)
+    st.page_link("pages/3_Tyre_Strategy.py", label="Open →", use_container_width=True)
