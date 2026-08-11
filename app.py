@@ -39,7 +39,7 @@ session_type=st.sidebar.selectbox(
     }[x]
 )
 if st.sidebar.button("Load Race", use_container_width=True,type='primary'):
-    with st.spinner(f"Loading {year} {race}"):
+    with st.spinner(f"Loading {year} {race} fetching real F1 data, this may take 1-2 minutes on first load..."):
         try:
             session=extract_session(year,race,session_type)
             clean_laps=transform_laps(session)
@@ -67,7 +67,7 @@ if st.sidebar.button("Load Race", use_container_width=True,type='primary'):
             st.session_state['session_type'] = session_type
 
         except Exception as e:
-            st.sidebar.error(f"❌ Error: {e}")
+            st.sidebar.error(f"Error: {e}")
 
 st.sidebar.markdown("---")
 
